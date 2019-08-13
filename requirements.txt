@@ -20,4 +20,4 @@ PyMySQL
 SQLAlchemy
 Werkzeug
 WTForms
-html2markdown
+eventlet

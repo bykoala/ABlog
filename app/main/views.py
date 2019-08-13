@@ -7,7 +7,6 @@ from ..models import *
 from ..utils import *
 from .. import cache
 import json
-import htmlmin
 
 
 def get_post_cache(key):
