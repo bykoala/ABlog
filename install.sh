@@ -206,10 +206,10 @@ enter_info(){
         sed -i "s/PAYJS_KEY=''/PAYJS_KEY='${PAYJS_KEY}'/g" config.py
         ;;
         2)
-        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息 [1-2]"
+        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息"
         ;;
         *)
-        echo -e "${Error}:请输入正确数字 [1-2]"
+        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息"
         ;;
     esac
 
