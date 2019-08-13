@@ -38,13 +38,14 @@ Ablog是通过Flask写的博客系统，由Abbey通过[YuBlog](https://github.co
 本博客提供一键安装脚本，适应：`Centos 7、Ubuntu 16+、Debian 8+`，安装方式：
 
 1. 先安装`Git`
-    - Ubuntu/Debian
+
+**Ubuntu/Debian**
 ```
 apt-get update -y
 apt-get upgrade -y
 apt-get install git
 ```
-    - Centos
+**Centos**
 ```
 yum install git
 ```
@@ -64,17 +65,17 @@ cd ABlog
 bash install.sh
 ```
 
-    安装过程中，会要求输入：
+安装过程中，会要求输入：
 
-    - 数据**储存**方式：`MySQL`或`sqlite`
-        - 如果是`MySQL`，会继续要求输入：MySQL用户名、密码、数据库名。_ps. 请提前安装MySQL_
-        - 如果是`sqlite`，会使用sqlite储存数据
-    - 数据**缓存**方式：`redis`和`sample`
-        - 如果是`redis`，则使用redis做缓存，请提前安装redis
-        - 如果是`sample`，则使用文本做缓存，性能不如redis
-    - 管理员账号、密码、简介
-    - 网站名称、标题、协议、域名
-    - 最后是payjs的商户号和密钥。如果没有payjs账号可跳过
+- 数据**储存**方式：`MySQL`或`sqlite`
+    - 如果是`MySQL`，会继续要求输入：MySQL用户名、密码、数据库名。_ps. 请提前安装MySQL_
+    - 如果是`sqlite`，会使用sqlite储存数据
+- 数据**缓存**方式：`redis`和`sample`
+    - 如果是`redis`，则使用redis做缓存，请提前安装redis
+    - 如果是`sample`，则使用文本做缓存，性能不如redis
+- 管理员账号、密码、简介
+- 网站名称、标题、协议、域名
+- 最后是payjs的商户号和密钥。如果没有payjs账号可跳过
 
 5. 运行完之后根据提示访问即可
 
