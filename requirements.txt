@@ -21,3 +21,4 @@ SQLAlchemy
 Werkzeug
 WTForms
 eventlet
+requests

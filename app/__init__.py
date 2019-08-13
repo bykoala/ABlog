@@ -13,11 +13,6 @@ lm.login_view = 'admin.login'
 whooshee = Whooshee()
 cache = Cache()
 
-if Config.CACHE_REDIS_PASSWORD!="":
-    pool = ConnectionPool(host=Config.CACHE_REDIS_HOST,port=Config.CACHE_REDIS_PORT,db=Config.CACHE_REDIS_DB,password=Config.CACHE_REDIS_PASSWORD)
-else:
-    pool = ConnectionPool(host=Config.CACHE_REDIS_HOST,port=Config.CACHE_REDIS_PORT,db=Config.CACHE_REDIS_DB)
-redis_client=Redis(connection_pool=pool)
 
 
 def create_app(config_name):

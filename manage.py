@@ -101,7 +101,6 @@ app.jinja_env.globals['cut_buy']=cut_buy
 app.jinja_env.globals['get_id']=get_id
 app.jinja_env.globals['get_date']=get_date
 app.jinja_env.globals['int']=int
-redis_client.flushall()
 
 
 if __name__ == '__main__':
