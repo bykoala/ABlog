@@ -163,7 +163,7 @@ enter_info(){
         echo
         ;;
         2)
-        sed -i "s/CACHE_TYPE='redis'/CACHE_TYPE='sample'/g" config.py
+        sed -i "s/CACHE_TYPE = 'redis'/CACHE_TYPE = 'sample'/g" config.py
         ;;
         *)
         clear
