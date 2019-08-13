@@ -91,9 +91,9 @@ install_pyenv(){
             apt-get install -y libreadline6–dev
         fi
         curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-        echo "export PATH=\"/bin:$PATH\"
-eval \"$(pyenv init -)\"
-eval \"$(pyenv virtualenv-init -)\"" >> ~/.bashrc
+        echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
+eval \"\$(pyenv init -)\"
+eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
         source ~/.bashrc
         if ! command -v pyenv 1>/dev/null; then
             echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
