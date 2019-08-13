@@ -111,4 +111,12 @@ _ps. 别问我后台首页的图标干嘛的_
 
 
 ## Q&A
-请访问[https://www.abbeyok.com/archives/394](https://www.abbeyok.com/archives/394)并在评论区提问
+
+1. 如何修改收款码？
+- 支付宝收款码路径：app/static/images/alipay.jpg
+- 微信收款码路径：app/static/images/wechatpay.jpg
+
+2. 如何修改头像？
+可以在`后台-站点-编辑站点`编辑
+
+更多问题请访问[https://www.abbeyok.com/archives/394](https://www.abbeyok.com/archives/394)并在评论区提问
