@@ -11,21 +11,17 @@ Font="\033[0m"
 Blue="\033[36m"
 cur_path=`pwd`
 
-
-check_port() {
-        netstat -tlpn | grep "\b$1\b"
-}
 #root permission
 check_root(){
-        if [[ $EUID -ne 0 ]]; then
-        echo "${Red}Error:请使用root运行该脚本！"${Font} 1>&2
-        exit 1
-        fi
+    if [[ $EUID -ne 0 ]]; then
+    echo "${Red}Error:请使用root运行该脚本！"${Font} 1>&2
+    exit 1
+    fi
 }
 
 #check system
 check_system(){
-        if [[ -f /etc/redhat-release ]]; then
+    if [[ -f /etc/redhat-release ]]; then
         release="centos"
     elif cat /etc/issue | grep -Eqi "debian"; then
         release="debian"
