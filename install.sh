@@ -155,7 +155,7 @@ enter_info(){
 
     echo "请设置[数据缓存]方式:"
     echo "1. redis"
-    echo "2. sample"
+    echo "2. simple"
     stty erase '^H' && read -p " 请输入数字 [1-2]:" cache_num
 
     case "$cache_num" in
@@ -163,7 +163,7 @@ enter_info(){
         echo
         ;;
         2)
-        sed -i "s/CACHE_TYPE = 'redis'/CACHE_TYPE = 'sample'/g" config.py
+        sed -i "s/CACHE_TYPE = 'redis'/CACHE_TYPE = 'simple'/g" config.py
         ;;
         *)
         clear
@@ -280,7 +280,7 @@ main(){
     echo -e "———————————————————————————————————————"
     echo -e "${Blue}ABlog一键脚本 for Debian 8+ 、CentOS 7、Ubuntu 16+${Font}"
     echo -e "${Blue}请提前通过宝塔安装MySQL、Redis${Font}"
-    echo -e "${Blue}如果未安装MySQL和Redis，储存方式请选：sqlite，缓存方式请选：sample${Font}"
+    echo -e "${Blue}如果未安装MySQL和Redis，储存方式请选：sqlite，缓存方式请选：simple${Font}"
     echo -e "———————————————————————————————————————"
     install_pyenv
     install_py374
