@@ -130,21 +130,21 @@ enter_info(){
         STORE_METHOD='mysql'
 
         read -p "请设置MySQL用户名:" MYSQL_USER
-        sed -i "s/MYSQL_USER='mysql_user'/MYSQL_USER='${MYSQL_USER}'/g" config.py
+        sed -i "s/MYSQL_USER = 'mysql_user'/MYSQL_USER = '${MYSQL_USER}'/g" config.py
 
         read -p "请设置数据储存方式[mysql/sqlite]:" MYSQL_USER
-        sed -i "s/MYSQL_USER='mysql_user'/MYSQL_USER='${MYSQL_USER}'/g" config.py
+        sed -i "s/MYSQL_USER = 'mysql_user'/MYSQL_USER = '${MYSQL_USER}'/g" config.py
 
         read -p "请设置MySQL密码:" MYSQL_PASSWORD
-        sed -i "s/MYSQL_PASSWORD='mysql_passwd'/MYSQL_PASSWORD='${MYSQL_PASSWORD}'/g" config.py
+        sed -i "s/MYSQL_PASSWORD = 'mysql_passwd'/MYSQL_PASSWORD = '${MYSQL_PASSWORD}'/g" config.py
 
         read -p "请设置MySQL数据库名:" MYSQL_DB
-        sed -i "s/MYSQL_DB='MYSQL_DATABASE_CHARSET'/MYSQL_DB='${MYSQL_DB}'/g" config.py
+        sed -i "s/MYSQL_DB = 'MYSQL_DATABASE_CHARSET'/MYSQL_DB = '${MYSQL_DB}'/g" config.py
 
         ;;
         2)
         STORE_METHOD='sqlite'
-        sed -i "s/STORE_METHOD='sqlite'/STORE_METHOD='${STORE_METHOD}'/g" config.py
+        sed -i "s/STORE_METHOD='mysql'/STORE_METHOD='sqlite'/g" config.py
         ;;
         *)
         clear
@@ -172,25 +172,25 @@ enter_info(){
     esac
 
     read -p "请设置管理员账号:" ADMIN_NAME
-    sed -i "s/ADMIN_NAME='Abbey'/ADMIN_NAME='${ADMIN_NAME}'/g" config.py
+    sed -i "s/ADMIN_NAME = 'Abbey'/ADMIN_NAME = '${ADMIN_NAME}'/g" config.py
 
     read -p "请设置管理员密码:" ADMIN_PASSWORD
-    sed -i "s/ADMIN_PASSWORD='Admin'/ADMIN_PASSWORD='${ADMIN_PASSWORD}'/g" config.py
+    sed -i "s/ADMIN_PASSWORD = 'Admin'/ADMIN_PASSWORD = '${ADMIN_PASSWORD}'/g" config.py
 
     read -p "请设置管理员简介:" ADMIN_PROFILE
-    sed -i "s/ADMIN_PROFILE='Admin'/ADMIN_PROFILE='${ADMIN_PROFILE}'/g" config.py
+    sed -i "s/ADMIN_PROFILE = '数据分析兼职Python开发'/ADMIN_PROFILE = '${ADMIN_PROFILE}'/g" config.py
 
     read -p "请设置网站名称:" SITE_NAME
-    sed -i "s/SITE_NAME='一个人的公交'/SITE_NAME='${SITE_NAME}'/g" config.py
+    sed -i "s/SITE_NAME = '一个人的公交'/SITE_NAME = '${SITE_NAME}'/g" config.py
 
     read -p "请设置网站标题:" SITE_TITLE
-    sed -i "s/SITE_TITLE='My Blog'/SITE_TITLE='${SITE_TITLE}'/g" config.py
+    sed -i "s/SITE_TITLE = 'My Blog'/SITE_TITLE = '${SITE_TITLE}'/g" config.py
 
     read -p "请设置网站协议[http/https]:" WEB_PROTOCOL
-    sed -i "s/WEB_PROTOCOL='https'/WEB_PROTOCOL='${WEB_PROTOCOL}'/g" config.py
+    sed -i "s/WEB_PROTOCOL = 'https'/WEB_PROTOCOL = '${WEB_PROTOCOL}'/g" config.py
 
     read -p "请设置网站域名[www.abbeyok.com]:" WEB_URL
-    sed -i "s/WEB_URL='www.abbeyok.com'/WEB_URL='${WEB_URL}'/g" config.py
+    sed -i "s/WEB_URL = 'www.abbeyok.com'/WEB_URL = '${WEB_URL}'/g" config.py
 
     echo "是否设置payjs账号信息？:"
     echo "1. 设置"
@@ -206,10 +206,10 @@ enter_info(){
         sed -i "s/PAYJS_KEY=''/PAYJS_KEY='${PAYJS_KEY}'/g" config.py
         ;;
         2)
-        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息"
+        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息${Font}"
         ;;
         *)
-        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息"
+        echo -e "${Blue}:后续可自行在config.py设置payjs账号信息${Font}"
         ;;
     esac
 
