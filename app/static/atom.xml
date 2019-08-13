@@ -76,7 +76,7 @@
 <h3>付费阅读功能</h3>
 <p><img alt="4.png" src="https://i.loli.net/2019/08/08/26Wg5FMIXCsEn7T.png" /></p>
 <h2>开源否？</h2>
-<p>会开源，但是现在Abbey还在新增功能当中，开源日期未定！</p>]]></content>
+<p><a href="https://github.com/abbeyokgo/ABlog">https://github.com/abbeyokgo/ABlog</a></p>]]></content>
   </entry>
   <entry>
     <title>基于Flask写的付费阅读博客程序</title>

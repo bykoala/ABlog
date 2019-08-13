@@ -71,7 +71,7 @@ check_version(){
 }
 
 install_pyenv(){
-    if ! command -v pyenv 1>/dev/null; then
+    if ! command -v pyenv >/dev/null 2>&1; then
         echo -e "${Blue}正在安装pyenv！${Font}"
         if [[ "${release}" = "centos" ]]; then
             yum install git
@@ -95,7 +95,7 @@ install_pyenv(){
 eval \"\$(pyenv init -)\"
 eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
         source ~/.bashrc
-        if ! command -v pyenv 1>/dev/null; then
+        if ! command -v pyenv >/dev/null 2>&1; then
             echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
             exit 1
         fi
