@@ -71,48 +71,50 @@ check_version(){
 }
 
 install_pyenv(){
-    which pyenv > /dev/null 2>&1;
-    if ! [[ $? == 0 ]]; then
-        echo "pyenv已安装"
-    else
-            echo -e "${Blue}正在安装pyenv！${Font}"
-            if [[ "${release}" = "centos" ]]; then
-                yum install git
-                yum -y install zlib\*
-                yum install gcc -y
-                yum install make -y
-                yum install openssl -y
-                yum install openssl-devel -y
-                yum install sqlite-devel -y
-                yum install libffi-devel -y
-                yum install readline readline-devel -y
-            else
-                apt-get install -y git
-                apt-get install -y gcc
-                apt-get install -y make
-                apt-get install -y zlib1g
-                apt-get install -y zlib1g-dev
-                apt-get install -y zlibc
-                apt-get install -y libffi-devel
-                apt-get install -y libffi-dev
-                apt-get install -y libssl-dev
-                apt-get install -y sqlite3
-                apt-get install -y libsqlite3-dev
-                apt-get install -y libreadline6
-                apt-get install -y libreadline6–dev
-            fi
-            curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-            echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
+    s=`whereis pyenv | awk '{print $2}'`
+    if [ $s = '' ]; then
+        echo -e "${Blue}正在安装pyenv！${Font}"
+        if [[ "${release}" = "centos" ]]; then
+            yum install git
+            yum -y install zlib\*
+            yum install gcc -y
+            yum install make -y
+            yum install openssl -y
+            yum install openssl-devel -y
+            yum install sqlite-devel -y
+            yum install libffi-devel -y
+            yum install readline readline-devel -y
+        else
+            apt-get install -y git
+            apt-get install -y gcc
+            apt-get install -y make
+            apt-get install -y zlib1g
+            apt-get install -y zlib1g-dev
+            apt-get install -y zlibc
+            apt-get install -y libffi-devel
+            apt-get install -y libffi-dev
+            apt-get install -y libssl-dev
+            apt-get install -y sqlite3
+            apt-get install -y libsqlite3-dev
+            apt-get install -y libreadline6
+            apt-get install -y libreadline6–dev
+        fi
+        curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+        echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
 eval \"\$(pyenv init -)\"
 eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
-            source ~/.bashrc
-            which pyenv > /dev/null 2>&1;
-            if ! [[ $? == 0 ]]; then
-                echo "pyenv安装完成"
-            else
-                echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
-                exit 1
-            fi
+
+        source ~/.bashrc
+
+        s=`whereis pyenv | awk '{print $2}'`
+        if [ $s = '' ]; then
+            echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
+            exit 1
+        else
+            echo "pyenv安装完成"
+        fi
+    else
+        echo "pyenv已安装"
     fi
 
 }
