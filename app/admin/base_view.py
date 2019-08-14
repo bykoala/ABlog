@@ -73,7 +73,7 @@ def update_first_cache():
     posts = Post.query.order_by(Post.id.desc()).all()
     if len(posts) > 1:
         first_post = posts[1]
-        cache_key = '$#$#'.join(map(str, ['post', first_post.pid]))
+        cache_key = '$#$#'.join(map(str, ['post', first_post.id]))
         clean_cache(cache_key)
     return True
 

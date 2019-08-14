@@ -219,6 +219,9 @@ def views(type, id):
                 db.session.commit()
         else:
             cookie=str(id)
+            view.count += 1
+            db.session.add(view)
+            db.session.commit()
         resp = jsonify(count=view.count)
         resp.set_cookie(ckk, cookie, max_age=1 * 24 * 60 * 60)
         return resp

@@ -87,6 +87,7 @@
 
     function getViewCount(id) {
         var request;
+        var getTimestamp=new Date().getTime();
         if (window.XMLHttpRequest) {
             request = new XMLHttpRequest();
         } else {
@@ -102,7 +103,7 @@
                 }
             }
         };
-        request.open('GET', '/api/view/column/'+id);
+        request.open('GET', '/api/view/column/'+id+'?t='+getTimestamp);
         request.send();
     }
 

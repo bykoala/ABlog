@@ -243,6 +243,7 @@ function buypost(pid){
 
 function getViewCount(id) {
     var request;
+    var getTimestamp=new Date().getTime();
     if (window.XMLHttpRequest) {
         request = new XMLHttpRequest();
     } else {
@@ -258,7 +259,7 @@ function getViewCount(id) {
             }
         }
     };
-    request.open('GET', '/api/view/post/'+id);
+    request.open('GET', '/api/view/post/'+id+'?t='+getTimestamp);
     request.send();
 }
 
