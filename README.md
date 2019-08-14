@@ -256,4 +256,4 @@ _ps. 别问我后台首页的图标干嘛的_
 2. 如何修改头像？
 可以在`后台-站点-编辑站点`编辑
 
-更多问题请访问[https://www.abbeyok.com/archives/394](https://www.abbeyok.com/archives/394)并在评论区提问
+更多问题请访问[https://www.abbeyok.com/archives/393](https://www.abbeyok.com/archives/393)并在评论区提问
