@@ -236,18 +236,18 @@ enter_info(){
 
 install_package(){
     echo -e "${Blue}开始安装依赖包！${Font}"
-    pip3 install -r requirements.txt
+    $HOME/.pyenv/versions/3.7.4/bin/pip install -r requirements.txt
 }
 
 init_blog(){
     echo -e "${Blue}开始初始化博客！${Font}"
-    python3 manage.py deploy
+    $HOME/.pyenv/versions/3.7.4/bin/python manage.py deploy
 }
 
 
 #set start up
 start(){
-        echo -e "${Blue}正在为相关应用设置开机自启！${Font}"
+    echo -e "${Blue}正在为相关应用设置开机自启！${Font}"
     echo "[Unit]
 Description=blog
 After=network.target
@@ -257,7 +257,7 @@ Wants=network.target
 Type=simple
 PIDFile=/var/run/blog.pid
 WorkingDirectory=${cur_path}
-ExecStart=gunicorn -keventlet -b 0.0.0.0:34567 manage:app
+ExecStart=$HOME/.pyenv/versions/3.7.4/bin/gunicorn -keventlet -b 0.0.0.0:34567 manage:app
 RestartPreventExitStatus=23
 Restart=always
 User=root
