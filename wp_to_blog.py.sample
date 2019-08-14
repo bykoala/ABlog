@@ -16,7 +16,7 @@ def insert_tags():
     source_cursor.execute(select_sql)
     tags=source_cursor.fetchall()
     for tid,tagname in tags:
-        insert_sql='insert IGNORE into tags values(%s,%s)'
+        insert_sql='insert IGNORE into tags values(%s,%s,0)'
         store_cursor.execute(insert_sql,(tid,tagname));
         store_db.commit()
         print(f'插入标签：{tagname}')
@@ -26,7 +26,7 @@ def insert_categories():
     source_cursor.execute(select_sql)
     tags=source_cursor.fetchall()
     for cid,catename in tags:
-        insert_sql='insert IGNORE into category values(%s,%s)'
+        insert_sql='insert IGNORE into category values(%s,%s,0)'
         store_cursor.execute(insert_sql,(cid,catename));
         store_db.commit()
         print(f'插入分类：{catename}')

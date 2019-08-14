@@ -71,41 +71,56 @@ check_version(){
 }
 
 install_pyenv(){
-    if ! [[ -n `which pyenv` ]]; then
-        echo -e "${Blue}正在安装pyenv！${Font}"
-        if [[ "${release}" = "centos" ]]; then
-            yum install git
-            yum -y install zlib\*
-            yum install openssl -y
-            yum install openssl-devel -y
-            yum install sqlite-devel -y
-            yum install readline readline-devel -y
-        else
-            apt-get install -y git
-            apt-get install -y zlib1g
-            apt-get install -y libffi-devel
-            apt-get install -y libssl-dev
-            apt-get install -y sqlite3
-            apt-get install -y libsqlite3-dev
-            apt-get install -y libreadline6
-            apt-get install -y libreadline6–dev
-        fi
-        curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-        echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
+    which pyenv > /dev/null 2>&1;
+    if ! [[ $? == 0 ]]; then
+        echo "pyenv已安装"
+    else
+            echo -e "${Blue}正在安装pyenv！${Font}"
+            if [[ "${release}" = "centos" ]]; then
+                yum install git
+                yum -y install zlib\*
+                yum install gcc -y
+                yum install make -y
+                yum install openssl -y
+                yum install openssl-devel -y
+                yum install sqlite-devel -y
+                yum install libffi-devel -y
+                yum install readline readline-devel -y
+            else
+                apt-get install -y git
+                apt-get install -y gcc
+                apt-get install -y make
+                apt-get install -y zlib1g
+                apt-get install -y zlib1g-dev
+                apt-get install -y zlibc
+                apt-get install -y libffi-devel
+                apt-get install -y libffi-dev
+                apt-get install -y libssl-dev
+                apt-get install -y sqlite3
+                apt-get install -y libsqlite3-dev
+                apt-get install -y libreadline6
+                apt-get install -y libreadline6–dev
+            fi
+            curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+            echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
 eval \"\$(pyenv init -)\"
 eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
-        source ~/.bashrc
-        if ! [[ -n `which pyenv` ]]; then
-            echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
-            exit 1
-        fi
+            source ~/.bashrc
+            which pyenv > /dev/null 2>&1;
+            if ! [[ $? == 0 ]]; then
+                echo "pyenv安装完成"
+            else
+                echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
+                exit 1
+            fi
     fi
+
 }
 
 install_py374(){
-    pyenv install -v 3.7.4
-    pyenv rehash
-    pyenv local 3.7.4
+    $HOME/.pyenv/bin/pyenv install -v 3.7.4
+    $HOME/.pyenv/bin/pyenv rehash
+    $HOME/.pyenv/bin/pyenv local 3.7.4
 }
 
 
@@ -219,12 +234,12 @@ enter_info(){
 
 install_package(){
     echo -e "${Blue}开始安装依赖包！${Font}"
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
 }
 
 init_blog(){
     echo -e "${Blue}开始初始化博客！${Font}"
-    python manage.py deploy
+    python3 manage.py deploy
 }
 
 
@@ -254,6 +269,17 @@ WantedBy=multi-user.target
         systemctl enable pyone
 }
 
+#open firewall
+firewall(){
+    if [[ "${release}" = "centos" ]]; then
+        firewall-cmd --zone=public --add-port=34567/tcp --permanent
+        firewall-cmd --reload
+    else
+        apt-get install -y iptables
+        iptables -I INPUT -p tcp --dport 34567 -j ACCEPT
+        iptables-save
+    fi
+}
 #Complete info
 info(){
     local_ip=`curl http://whatismyip.akamai.com`
@@ -269,6 +295,7 @@ info(){
     echo -e "${Blue}4. 手动运行博客: systemctl stop pyone && gunicorn -keventlet -b 0:34567 manage:app${Font}"
     echo -e "———————————————————————————————————————"
 }
+
 
 #start menu
 main(){
@@ -290,6 +317,7 @@ main(){
     install_package
     init_blog
     start
+    firewall
     info
 }
 
