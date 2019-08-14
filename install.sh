@@ -268,9 +268,8 @@ User=root
 WantedBy=multi-user.target
 " > '/etc/systemd/system/blog.service'
 
-        EXEC="$(command -v gunicorn)"
-        systemctl start pyone
-        systemctl enable pyone
+        systemctl start blog
+        systemctl enable blog
 }
 
 #open firewall
