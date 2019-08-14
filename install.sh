@@ -71,8 +71,8 @@ check_version(){
 }
 
 install_pyenv(){
-    s=`whereis pyenv | awk '{print $2}'`
-    if [ $s = '' ]; then
+    s=`ls -a $HOME/ | grep ".pyenv" | wc -l`
+    if [[ $s = 0 ]]; then
         echo -e "${Blue}正在安装pyenv！${Font}"
         if [[ "${release}" = "centos" ]]; then
             yum install git
@@ -106,8 +106,8 @@ eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
 
         source ~/.bashrc
 
-        s=`whereis pyenv | awk '{print $2}'`
-        if [ $s = '' ]; then
+        s=`ls -a $HOME/ | grep ".pyenv" | wc -l`
+        if [[ $s = 0 ]]; then
             echo -e "${Red}安装pyenv出错！请先按照：https://www.abbeyok.com/archives/352 安装pyenv${Font}"
             exit 1
         else
