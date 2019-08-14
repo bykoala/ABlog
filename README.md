@@ -80,7 +80,141 @@ bash install.sh
 5. 运行完之后根据提示访问即可
 
 ### 手动安装
-动手能力强的可以参考一键安装脚本安装
+1. 先安装`Git`
+
+**Ubuntu/Debian**
+```
+apt-get update -y
+apt-get upgrade -y
+apt-get install git
+```
+**Centos**
+```
+yum install git
+```
+
+2. 下载源码
+```
+git clone https://github.com/abbeyokgo/ABlog.git
+```
+
+3. 切换到源码目录
+```
+cd ABlog
+```
+
+4. 安装依赖
+
+**Ubuntu/Debian**
+```
+apt-get install -y curl
+apt-get install -y gcc
+apt-get install -y make
+apt-get install -y zlib1g
+apt-get install -y zlib1g-dev
+apt-get install -y zlibc
+apt-get install -y libffi-devel
+apt-get install -y libffi-dev
+apt-get install -y libssl-dev
+apt-get install -y sqlite3
+apt-get install -y libsqlite3-dev
+apt-get install -y libreadline6
+apt-get install -y libreadline6–dev
+```
+**Centos**
+```
+yum install curl -y
+yum -y install zlib\*
+yum install gcc -y
+yum install make -y
+yum install openssl -y
+yum install openssl-devel -y
+yum install sqlite-devel -y
+yum install libffi-devel -y
+yum install readline readline-devel -y
+```
+
+5. 安装`pyenv`
+```
+curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+```
+安装完之后运行
+```
+echo "export PATH=\"\$HOME/.pyenv/bin:\$PATH\"
+eval \"\$(pyenv init -)\"
+eval \"\$(pyenv virtualenv-init -)\"" >> ~/.bashrc
+
+source ~/.bashrc
+```
+测试是否安装成功：
+```
+pyenv -v
+```
+如果显示版本号说明安装成功，继续下面的步骤。
+
+6. 通过`pyenv`安装`Python 3.7.4`
+
+**安装**
+```
+pyenv install -v 3.7.4
+```
+
+**设置`ABlog`目录的环境为3.7.4**
+```
+pyenv rehash
+pyenv local 3.7.4
+```
+
+7. 复制`可配置文件`和`迁移脚本`
+```
+cp config.py.sample config.py
+cp wp_to_blog.py.sample wp_to_blog.py
+```
+**然后修改`config.py`的配置**
+
+8. 安装依赖包
+```
+$HOME/.pyenv/versions/3.7.4/bin/pip install -r requirements.txt
+```
+
+9. 初始化
+```
+$HOME/.pyenv/versions/3.7.4/bin/python manage.py deploy
+```
+
+10. 配置开机启动
+```
+echo "[Unit]
+Description=blog
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/blog.pid
+WorkingDirectory=${cur_path}
+ExecStart=$HOME/.pyenv/versions/3.7.4/bin/gunicorn -keventlet -b 0.0.0.0:34567 manage:app
+RestartPreventExitStatus=23
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+" > '/etc/systemd/system/blog.service'
+```
+然后启动
+```
+systemctl start blog
+systemctl enable blog
+```
+
+到了这一步访问`ip:34567`应该就可以访问了！
+
+如果不能试着手动运行看出什么错误：
+```
+$HOME/.pyenv/versions/3.7.4/bin/gunicorn -keventlet -b 0.0.0.0:34567 manage:app
+```
+
 
 
 ## wordpress迁移脚本
