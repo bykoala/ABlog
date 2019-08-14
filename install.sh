@@ -76,6 +76,7 @@ install_pyenv(){
         echo -e "${Blue}正在安装pyenv！${Font}"
         if [[ "${release}" = "centos" ]]; then
             yum install git
+            yum install curl -y
             yum -y install zlib\*
             yum install gcc -y
             yum install make -y
@@ -86,6 +87,7 @@ install_pyenv(){
             yum install readline readline-devel -y
         else
             apt-get install -y git
+            apt-get install -y curl
             apt-get install -y gcc
             apt-get install -y make
             apt-get install -y zlib1g
