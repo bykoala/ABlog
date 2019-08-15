@@ -193,6 +193,9 @@ enter_info(){
     read -p "请设置管理员账号:" ADMIN_NAME
     sed -i "s/ADMIN_NAME = 'Abbey'/ADMIN_NAME = '${ADMIN_NAME}'/g" config.py
 
+    read -p "请设置管理员邮箱:" ADMIN_MAIL
+    sed -i "s/ADMIN_MAIL = 'abbeyok@gmail.com'/ADMIN_MAIL = '${ADMIN_MAIL}'/g" config.py
+
     read -p "请设置管理员密码:" ADMIN_PASSWORD
     sed -i "s/ADMIN_PASSWORD = 'Admin'/ADMIN_PASSWORD = '${ADMIN_PASSWORD}'/g" config.py
 

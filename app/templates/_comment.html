@@ -75,9 +75,9 @@
             {% if p %}
                 {% if p == page %}
                     <a class="current-page"
-                        href="{%if post%}{{url_for('main.post',pid=post.id,page=p)}}{%elif page%}{{url_for('main.page',page_url=page.url_name,page=p)}}{%else%}{{url_for('column.article',url=column.url_name,id=article.id,page=p)}}{%endif%}">{{ p }}</a>
+                        href="{%if post%}{{url_for('main.post',pid=post.id,page=p)}}{%elif page%}{{url_for('main.page',page_url=page_cls.url_name,page=p)}}{%else%}{{url_for('column.article',url=column.url_name,id=article.id,page=p)}}{%endif%}">{{ p }}</a>
                 {% else %}
-                    <a href="{%if post%}{{url_for('main.post',pid=post.id,page=p)}}{%elif page%}{{url_for('main.page',page_url=page.url_name,page=p)}}{%else%}{{url_for('column.article',url=column.url_name,id=article.id,page=p)}}{%endif%}">{{ p }}</a>
+                    <a href="{%if post%}{{url_for('main.post',pid=post.id,page=p)}}{%elif page%}{{url_for('main.page',page_url=page_cls.url_name,page=p)}}{%else%}{{url_for('column.article',url=column.url_name,id=article.id,page=p)}}{%endif%}">{{ p }}</a>
                 {% endif %}
             {% else %}
             <a class="disabled" href="#">&hellip;</a>
@@ -126,7 +126,7 @@
                 <textarea cols="80" name="comment" rows="6" placeholder="评论支持 Markdown 语法。" class="ipt-txt"></textarea>
                 <span class="cancel">取消</span>
                 <button type="submit" class="comment-submit"
-                        posturl="{%if post%}{{post.url}}{%elif page%}{{page.id}}{%else%}column/{{article.id}}{%endif%}"
+                        posturl="{%if post%}post/{{post.id}}{%elif page_cls%}page/{{page_cls.id}}{%else%}column/{{article.id}}{%endif%}"
                         replyid="" replyto="">发表评论</button>
 
 

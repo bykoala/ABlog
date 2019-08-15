@@ -40,7 +40,7 @@ class Config(object):
     # 管理员简介
     ADMIN_PROFILE = '数据分析兼职Python开发'
     #管理员邮箱
-    ADMIN_MAIL='abbeyok@gmail.com'
+    ADMIN_MAIL = 'abbeyok@gmail.com'
 
     # RSS站点信息
     # 站点协议

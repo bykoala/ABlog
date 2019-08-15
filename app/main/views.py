@@ -254,22 +254,28 @@ def save_comment(post, form):
     if isinstance(post, Post):
         post_url=base_url + '/archives/' + str(post.id)
         comment.post = post
+        cache.delete_memoized(get_comments,post.id,None,None)
     elif isinstance(post, Page):
         post_url = base_url + '/page/' + post.url_name
         comment.page = post
+        cache.delete_memoized(get_comments,None,post.id,None)
     elif isinstance(post, Article):
         post_url = base_url + '/column/' + post.column.url_name + '/' + str(post.id)
         comment.article = post
+        cache.delete_memoized(get_comments,None,None,post.id)
     comment.disabled=disabled
     db.session.add(comment)
     db.session.commit()
     return data
 
-@main.route('/<url>/comment', methods=['POST'])
-def comment(url):
-    post = Post.query.filter_by(id=url).first()
-    if not post:
-        post = Page.query.filter_by(url_name=url).first()
+@main.route('/<type>/<id>/comment', methods=['POST'])
+def comment(type,id):
+    if type=='post':
+        post=Post.query.filter_by(id=id).first()
+    elif type=='page':
+        post=Page.query.filter_by(id=id).first()
+    elif type=='column':
+        post=Article.query.filter_by(id=id).first()
     form = request.get_json()
     data = save_comment(post, form)
     if data.get('replyTo'):
