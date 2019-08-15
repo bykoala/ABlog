@@ -125,11 +125,11 @@ def get_comments(pid,page_id,article_id,page=1,key='20190813v2'):
     max_page=1
     per_page=current_app.config['COMMENTS_PER_PAGE']
     if pid is not None:
-        total_comments=Comment.query.filter_by(post_id=pid,disabled=True).all()
+        total_comments=Comment.query.filter_by(post_id=pid,disabled=True).order_by(Comment.id.desc()).all()
     elif page_id is not None:
-        total_comments=Comment.query.filter_by(page_id=page_id,disabled=True).all()
+        total_comments=Comment.query.filter_by(page_id=page_id,disabled=True).order_by(Comment.id.desc()).all()
     elif article_id is not None:
-        total_comments=Comment.query.filter_by(article_id=article_id,disabled=True).all()
+        total_comments=Comment.query.filter_by(article_id=article_id,disabled=True).order_by(Comment.id.desc()).all()
     max_page=len(total_comments) // per_page + 1 if len(total_comments) % per_page != 0 else len(total_comments) // per_page
     comments=total_comments[(page-1)*per_page:page*per_page]
     pagination =iter_pages(max_page,page)

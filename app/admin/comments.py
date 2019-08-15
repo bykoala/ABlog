@@ -1,5 +1,5 @@
 from .base_view import *
-
+from ..utils import get_comments
 
 @admin.route('/comments')
 @login_required
@@ -21,6 +21,7 @@ def delete_comment(id):
     comment = Comment.query.get_or_404(id)
     page = comment.page
     post = comment.post
+    article = comment.article
     db.session.delete(comment)
     db.session.commit()
     flash('删除成功')
@@ -29,12 +30,17 @@ def delete_comment(id):
         if page and page.url_name == 'guest-book':
             # 清除缓存
             update_global_cache('guestbookCounts', 1, '-')
+            cache.delete_memoized(get_comments,None,page.id,None)
         elif post and isinstance(post, Post):
             # 删除文章缓存
             cache_key = '$#$#'.join(map(str, ['post', post.id]))
             post_cache = cache.get(cache_key)
             post_cache['comment_count'] -= 1
             cache.set(cache_key, post_cache)
+            cache.delete_memoized(get_comments,post.id,None,None)
+        elif article:
+            cache.delete_memoized(get_comments,None,None,article.id)
+
     return redirect(url_for('admin.admin_comments'))
 
 @admin.route('/allow/comment/<int:id>')
@@ -51,46 +57,25 @@ def allow_comment(id):
     admin_mail = current_app.config['ADMIN_MAIL']
 
     if comment.isReply:
-        reply_to_comment = Comment.query.get_or_404(comment.replyTo)
+        reply_to_comment = Comment.query.get_or_404(comment.parent_id)
         reply_email = reply_to_comment.email
-        if reply_email != admin_mail:
-            # 邮件配置
-            from_addr = current_app.config['MAIL_USERNAME']
-            password = current_app.config['MAIL_PASSWORD']
-            to_addr = reply_email
-            smtp_server = current_app.config['MAIL_SERVER']
-            mail_port = current_app.config['MAIL_PORT']
-            # 站点链接
-            base_url = current_app.config['WEB_URL']
-            # 收件人就是被回复的人
-            nickname = reply_to_comment.author
-            com = comment.comment
-
-            post_url = ''
-            if comment.post:
-                post_url = 'http://' +  base_url + '/archives/' + str(comment.page.id)
-            elif comment.page:
-                post_url = 'http://' + base_url + '/page/' + comment.page.url_name
-            elif comment.article:
-                post_url = 'http://' + base_url + '/column/' + comment.article.column.url_name \
-                                        + '/' + str(comment.article.id)
-            # 发送邮件
-            msg = render_template('user_mail.html', nickname=nickname,comment=com, url=post_url)
-            asyncio_send(from_addr, password, to_addr, smtp_server, mail_port, msg)
-
     page = comment.page
     post = comment.post
+    article = comment.article
     if page and page.url_name == 'guest-book':
         # 清除缓存
         update_global_cache('guestbookCounts', 1, '+')
+        cache.delete_memoized(get_comments,None,page.id,None)
     elif post and isinstance(post, Post):
         # 更新文章缓存
         cache_key = '$#$#'.join(map(str, ['post', post.id]))
         post_cache = cache.get(cache_key)
-        html_key='view/{}'.format(s)
         if post_cache:
             post_cache['comment_count'] += 1
             cache.set(cache_key, post_cache)
+        cache.delete_memoized(get_comments,post.id,None,None)
+    elif article:
+        cache.delete_memoized(get_comments,None,None,article.id)
     return redirect(url_for('admin.admin_comments'))
 
 @admin.route('/unable/comment/<int:id>')
@@ -105,9 +90,11 @@ def unable_comment(id):
 
     page = comment.page
     post = comment.post
+    article = comment.article
     if page and page.url_name == 'guest-book':
         # 清除缓存
         update_global_cache('guestbookCounts', 1, '-')
+        cache.delete_memoized(get_comments,None,page.id,None)
     elif post and isinstance(post, Post):
         # 更新文章缓存
         cache_key = '$#$#'.join(map(str, ['post', post.id]))
@@ -115,6 +102,9 @@ def unable_comment(id):
         if post_cache:
             post_cache['comment_count'] -= 1
             cache.set(cache_key, post_cache)
+        cache.delete_memoized(get_comments,post.id,None,None)
+    elif article:
+        cache.delete_memoized(get_comments,None,None,article.id)
     return redirect(url_for('admin.admin_comments'))
 
 
@@ -147,6 +137,24 @@ def reply_comment(id):
         db.session.add(comment)
         db.session.commit()
         flash('回复成功')
+        #删除缓存
+        page = comment.page
+        post = comment.post
+        article = comment.article
+        if page and page.url_name == 'guest-book':
+            # 清除缓存
+            update_global_cache('guestbookCounts', 1, '-')
+            cache.delete_memoized(get_comments,None,page.id,None)
+        elif post and isinstance(post, Post):
+            # 更新文章缓存
+            cache_key = '$#$#'.join(map(str, ['post', post.id]))
+            post_cache = cache.get(cache_key)
+            if post_cache:
+                post_cache['comment_count'] -= 1
+                cache.set(cache_key, post_cache)
+            cache.delete_memoized(get_comments,post.id,None,None)
+        elif article:
+            cache.delete_memoized(get_comments,None,None,article.id)
         return redirect(url_for('admin.admin_comments'))
     else:
         if len(form.errors.items())>0:
