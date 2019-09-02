@@ -203,7 +203,7 @@ def views(type, id):
             if str(id) in old_cookie.split('-'):
                 cookie=old_cookie
             else:
-                cookie=request.cookies.get(ckk)+'-'+str(id)
+                cookie=old_cookie+'-'+str(id)
         else:
             cookie=str(id)
         resp.set_cookie(ckk, cookie, max_age=1 * 24 * 60 * 60)
@@ -213,7 +213,7 @@ def views(type, id):
             if str(id) in old_cookie.split('-'):
                 cookie=old_cookie
             else:
-                cookie=request.cookies.get(ckk)+'-'+str(id)
+                cookie=old_cookie+'-'+str(id)
                 view.count += 1
                 db.session.add(view)
                 db.session.commit()
